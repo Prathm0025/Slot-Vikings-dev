@@ -1,86 +1,64 @@
-pipeline {
-    agent any
+def PROJECT_NAME = "jenkins-unity-test"
+def CUSTOM_WORKSPACE = "C:\\Users\\morep\\OneDrive\\Documents\\Practice\\new\\jenkins-unity-test\\${PROJECT_NAME}"
+def UNITY_VERSION = "2022.3.47f1"
+def UNITY_INSTALLATION = "C:\\Program Files\\Unity\\Hub\\Editor\\${UNITY_VERSION}\\Editor"
+def REPO_URL = "https://github.com/Prathm0025/Slot-Vikings-dev.git"
 
+pipeline {
+    agent {
+        label {
+            label ""
+            customWorkspace "${CUSTOM_WORKSPACE}"
+        }
+    }
+    
     environment {
-        Token = credentials('GITHUB_TOKEN')  // Fetch GitHub token from Jenkins credentials
+        PROJECT_PATH = "${CUSTOM_WORKSPACE}\\${PROJECT_NAME}"
+        Token = credentials('GITHUB_TOKEN')
     }
 
     stages {
-        stage('Clone Repository') {
-            steps {
-                git url: 'https://github.com/Prathm0025/TypeScript-Build.git', branch: 'master'
-            }
-        }
-
-        stage('Setup Environment') {
+        stage('Checkout') {
             steps {
                 script {
-                    // Install dependencies
-                    sh 'npm install'
+                    // Clean workspace before cloning
+                    deleteDir()
+                    // Clone the repository
+                    git url: REPO_URL, branch: 'dev'
                 }
             }
         }
 
-        stage('Build') {
+        stage('Build WebGL') {
+            when { expression { BUILD_WebGL == 'true' } }
             steps {
                 script {
-                    // Build the project and handle errors
-                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                        sh 'npm run build --verbose'
+                    withEnv(["UNITY_PATH=${UNITY_INSTALLATION}"]) {
+                        bat '''
+                        "%UNITY_PATH%/Unity.exe" -quit -batchmode -projectPath %PROJECT_PATH% -executeMethod BuildScript.BuildWebGL -logFile -
+                        '''
                     }
                 }
             }
         }
 
-        stage('Run Compiled Output') {
-            when {
-                expression { currentBuild.currentResult == 'SUCCESS' }
-            }
+        stage('Push Build') {
             steps {
                 script {
-                    // Run the compiled project
-                    sh 'node dist/index.js' // Update if necessary, based on your output directory
+                    dir("${PROJECT_PATH}/Builds/WebGL") {
+                        // Ensure you are in the build directory
+                        bat '''
+                        git init
+                        git config user.email "you@example.com"
+                        git config user.name "Your Name"
+                        git add .
+                        git commit -m "Add WebGL build"
+                        git remote add origin ${REPO_URL}
+                        git push origin dev --force
+                        '''
+                    }
                 }
             }
         }
-
-        stage('Push Artifact') {
-            when {
-                expression { currentBuild.currentResult == 'SUCCESS' }
-            }
-            steps {
-                script {
-                    // Configure Git with user details
-                    sh 'git config user.email "you@example.com"'
-                    sh 'git config user.name "Your Name"'
-                    sh 'git remote set-url origin https://${Token}@github.com/Prathm0025/TypeScript-Build.git'
-                    sh 'git add dist/*' // Add your build artifacts from the correct folder
-                    sh 'git commit -m "Add new build artifacts"'
-                    sh 'git push origin master'
-                }
-            }
-        }
-/*
-        stage('Rollback') {
-            when {
-                expression { currentBuild.currentResult == 'FAILURE' }
-            }
-            steps {
-                script {
-                    // Perform rollback actions here
-                    echo 'Rolling back to the previous build...'
-                    sh 'git checkout HEAD^' // Checkout the previous commit
-                }
-            }
-        }
-        */
-    }
-
-    triggers {
-        pollSCM('H/5 * * * *') // Poll SCM every 5 minutes
-    }
-
-    options {
-        buildDiscarder(logRotator(numToKeepStr: '2')) // Keep the last 2 builds
     }
 }
