@@ -8,8 +8,8 @@ pipeline {
     agent any // Use any available agent
     
     environment {
-        PROJECT_PATH = "${env.WORKSPACE}\\${PROJECT_NAME}" // Use Jenkins workspace
-        Token = credentials('GITHUB_TOKEN')
+        PROJECT_PATH = "${env.WORKSPACE}\\${PROJECT_NAME}" // Define project path based on Jenkins workspace
+        Token = credentials('GITHUB_TOKEN') // Use GitHub credentials
     }
 
     stages {
@@ -27,9 +27,10 @@ pipeline {
         stage('Build WebGL') {
             steps {
                 script {
+                    // Ensure the Unity path is correct and does not use workspace path
                     withEnv(["UNITY_PATH=${UNITY_INSTALLATION}"]) {
                         bat '''
-                        "%UNITY_PATH%\\Unity.exe" -quit -batchmode -projectPath "%PROJECT_PATH%" -executeMethod BuildScript.BuildWebGL -logFile "%LOG_FILE_PATH%"
+                        "%UNITY_PATH%\\Unity.exe" -quit -batchmode -projectPath "%PROJECT_PATH%" -executeMethod BuildScript.BuildWebGL -logFile "%WORKSPACE%\\%LOG_FILE_PATH%"
                         '''
                     }
                 }
@@ -47,7 +48,7 @@ pipeline {
                         git config user.name "Your Name"
                         git add .
                         git commit -m "Add WebGL build"
-                        git add "%LOG_FILE_PATH%" // Add the log file to the commit
+                        git add "%WORKSPACE%\\%LOG_FILE_PATH%" // Add the log file to the commit
                         git commit -m "Add build log"
                         git remote add origin ${REPO_URL}
                         git push origin dev-build --force // Push to the correct branch
