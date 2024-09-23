@@ -1,20 +1,14 @@
 def PROJECT_NAME = "jenkins-unity-test"
-def CUSTOM_WORKSPACE = "C:\\Users\\morep\\OneDrive\\Documents\\Practice\\new\\jenkins-unity-test\\${PROJECT_NAME}"
 def UNITY_VERSION = "2022.3.47f1"
 def UNITY_INSTALLATION = "C:\\Program Files\\Unity\\Hub\\Editor\\${UNITY_VERSION}\\Editor"
 def REPO_URL = "https://github.com/Prathm0025/Slot-Vikings-dev.git"
-def LOG_FILE_PATH = "${CUSTOM_WORKSPACE}\\build.log" // Define the log file path
+def LOG_FILE_PATH = "build.log" // Define the log file path relative to the workspace
 
 pipeline {
-    agent {
-        label {
-            label ""
-            customWorkspace "${CUSTOM_WORKSPACE}"
-        }
-    }
+    agent any // Use any available agent
     
     environment {
-        PROJECT_PATH = "${CUSTOM_WORKSPACE}\\${PROJECT_NAME}"
+        PROJECT_PATH = "${env.WORKSPACE}\\${PROJECT_NAME}" // Use Jenkins workspace
         Token = credentials('GITHUB_TOKEN')
     }
 
