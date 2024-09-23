@@ -25,7 +25,7 @@ pipeline {
                     // Clean workspace before cloning
                     deleteDir()
                     // Clone the repository
-                    git url: REPO_URL, branch: 'dev'
+                    git url: REPO_URL, branch: 'dev-build'
                 }
             }
         }
