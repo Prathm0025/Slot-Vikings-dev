@@ -3,7 +3,7 @@ def CUSTOM_WORKSPACE = "C:\\Users\\morep\\OneDrive\\Documents\\Practice\\new\\je
 def UNITY_VERSION = "2022.3.47f1"
 def UNITY_INSTALLATION = "C:\\Program Files\\Unity\\Hub\\Editor\\${UNITY_VERSION}\\Editor"
 def REPO_URL = "https://github.com/Prathm0025/Slot-Vikings-dev.git"
-def LOG_FILE_PATH = "${CUSTOM_WORKSPACE}/build.log" // Define the log file path
+def LOG_FILE_PATH = "${CUSTOM_WORKSPACE}\\build.log" // Define the log file path
 
 pipeline {
     agent {
@@ -35,7 +35,7 @@ pipeline {
                 script {
                     withEnv(["UNITY_PATH=${UNITY_INSTALLATION}"]) {
                         bat '''
-                        "%UNITY_PATH%/Unity.exe" -quit -batchmode -projectPath %PROJECT_PATH% -executeMethod BuildScript.BuildWebGL -logFile "%LOG_FILE_PATH%"
+                        "%UNITY_PATH%\\Unity.exe" -quit -batchmode -projectPath %PROJECT_PATH% -executeMethod BuildScript.BuildWebGL -logFile "%LOG_FILE_PATH%"
                         '''
                     }
                 }
@@ -45,7 +45,7 @@ pipeline {
         stage('Push Build') {
             steps {
                 script {
-                    dir("${PROJECT_PATH}/Builds/WebGL") {
+                    dir("${PROJECT_PATH}\\Builds\\WebGL") {
                         // Ensure you are in the build directory
                         bat '''
                         git init
@@ -56,7 +56,7 @@ pipeline {
                         git add "%LOG_FILE_PATH%" // Add the log file to the commit
                         git commit -m "Add build log"
                         git remote add origin ${REPO_URL}
-                        git push origin dev --force
+                        git push origin dev-build --force // Push to the correct branch
                         '''
                     }
                 }
