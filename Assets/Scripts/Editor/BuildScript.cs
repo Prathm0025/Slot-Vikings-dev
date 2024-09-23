@@ -1,22 +1,5 @@
 using UnityEditor;
 using UnityEngine;
-
-public class BuildScript
-{
-    public static void PerformBuild()
-    {
-        string[] scenes = { "Assets/Scenes/MainScene.unity" };  // Specify your scenes
-        string buildPath = "Build/WebGL";
-        
-        BuildPipeline.BuildPlayer(scenes, buildPath, BuildTarget.WebGL, BuildOptions.None);
-        Debug.Log("WebGL Build Completed");
-    }
-}
-
-
-
-using UnityEditor;
-using UnityEngine;
 using System;
 using System.IO;
 using System.Linq;
