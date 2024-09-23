@@ -1,4 +1,4 @@
-def PROJECT_NAME = "jenkins-unity-test"
+def PROJECT_NAME = "Slot-Vikings-dev"
 def UNITY_VERSION = "2022.3.47f1"
 def UNITY_INSTALLATION = "C:\\Program Files\\Unity\\Hub\\Editor\\${UNITY_VERSION}\\Editor"
 def REPO_URL = "https://github.com/Prathm0025/Slot-Vikings-dev.git"
