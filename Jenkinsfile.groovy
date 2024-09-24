@@ -19,7 +19,7 @@ pipeline {
             steps {
                 script {
                     // Clean workspace before cloning
-                    deleteDir()
+                    // deleteDir()
                     // Clone the repository
                     git url: REPO_URL, branch: 'dev-build'
                 }
