@@ -50,7 +50,7 @@ pipeline {
                     git add .
                     git commit -m "Add WebGL build"
                     git remote set-url origin https://${Token}@github.com/Prathm0025/Slot-Vikings-dev.git
-                    git push origin dev-build --force // Push to the correct branch
+                    git push origin dev-build --force
                     '''
                 }
             }
