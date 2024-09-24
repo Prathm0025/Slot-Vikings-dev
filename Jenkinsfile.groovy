@@ -8,7 +8,7 @@ pipeline {
     agent any // Use any available agent
     
     environment {
-        PROJECT_PATH = "${env.WORKSPACE}\\${PROJECT_NAME}" // Define project path based on Jenkins workspace
+        PROJECT_PATH = "C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Viking-build\\${PROJECT_NAME}" // Define project path based on Jenkins workspace
         Token = credentials('GITHUB_TOKEN') // Use GitHub credentials
     }
 
