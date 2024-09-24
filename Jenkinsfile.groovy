@@ -7,7 +7,6 @@ def LOG_FILE_PATH = "build.log" // Define the log file path relative to the work
 pipeline {
     agent {
         label 'Windows-Agent' // Specify the agent by label
-        customWorkspace 'C:\\Jenkins\\Unity_Projects\\Slot-Vikings-dev' // Use the custom workspace
     }
     
     environment {
@@ -47,10 +46,12 @@ pipeline {
                         // Ensure you are in the build directory
                         bat '''
                         git init
-                        git config user.email "moreprathamesh849@gmail.com"
-                        git config user.name "Prathm0025"
+                        git config user.email "you@example.com"
+                        git config user.name "Your Name"
                         git add .
                         git commit -m "Add WebGL build"
+                        git add "%WORKSPACE%\\%LOG_FILE_PATH%" // Add the log file to the commit
+                        git commit -m "Add build log"
                         git remote add origin ${REPO_URL}
                         git push origin dev-build --force // Push to the correct branch
                         '''
