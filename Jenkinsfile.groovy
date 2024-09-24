@@ -10,7 +10,7 @@ pipeline {
     }
     
     environment {
-        PROJECT_PATH = "C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Viking-build" // Define project path based on Jenkins workspace
+        PROJECT_PATH = "C:\\Program Files\\workspace\\Viking-build" // Define project path based on Jenkins workspace
         Token = credentials('GITHUB_TOKEN') // Use GitHub credentials
     }
 
@@ -42,7 +42,7 @@ pipeline {
         stage('Push Build') {
             steps {
                 script {
-                    dir("${PROJECT_PATH}\\Builds\\WebGL") {
+                    {
                         // Ensure you are in the build directory
                         bat '''
                         git init
@@ -50,8 +50,7 @@ pipeline {
                         git config user.name "Your Name"
                         git add .
                         git commit -m "Add WebGL build"
-                        git add "%WORKSPACE%\\%LOG_FILE_PATH%" // Add the log file to the commit
-                        git commit -m "Add build log"
+                        git remote set-url origin https://${Token}@github.com/Prathm0025/Slot-Vikings-dev.git
                         git remote add origin ${REPO_URL}
                         git push origin dev-build --force // Push to the correct branch
                         '''
