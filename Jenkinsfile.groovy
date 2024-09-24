@@ -42,19 +42,16 @@ pipeline {
         stage('Push Build') {
             steps {
                 script {
-                    {   
-                        // Ensure you are in the build directory
-                        bat '''
-                        git init
-                        git config user.email "you@example.com"
-                        git config user.name "Your Name"
-                        git add .
-                        git commit -m "Add WebGL build"
-                        git remote set-url origin https://${Token}@github.com/Prathm0025/Slot-Vikings-dev.git
-                        git remote add origin ${REPO_URL}
-                        git push origin dev-build --force // Push to the correct branch
-                        '''
-                    }
+                    // Ensure you are in the build directory
+                    bat '''
+                    git init
+                    git config user.email "you@example.com"
+                    git config user.name "Your Name"
+                    git add .
+                    git commit -m "Add WebGL build"
+                    git remote set-url origin https://${Token}@github.com/Prathm0025/Slot-Vikings-dev.git
+                    git push origin dev-build --force // Push to the correct branch
+                    '''
                 }
             }
         }
