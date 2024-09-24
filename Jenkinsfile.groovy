@@ -42,7 +42,7 @@ pipeline {
         stage('Push Build') {
             steps {
                 script {
-                    {
+                    {   
                         // Ensure you are in the build directory
                         bat '''
                         git init
