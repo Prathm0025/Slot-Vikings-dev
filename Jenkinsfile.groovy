@@ -44,13 +44,13 @@ pipeline {
                 script {
                     // Ensure you are in the build directory
                     bat '''
-                    git init
-                    git config user.email "you@example.com"
-                    git config user.name "Your Name"
-                    git add .
-                    git commit -m "Add WebGL build"
-                    git remote set-url origin https://${Token}@github.com/Prathm0025/Slot-Vikings-dev.git
-                    git push origin dev-build --force
+                     git init
+                     git config user.email "moreprathmesh849@gmail.com"
+                     git config user.name "Prathm0025"
+                     git add .
+                     git commit -m "Add WebGL build"
+                     git remote add origin https://github.com/Prathm0025/Slot-Vikings-dev.git
+                     git push https://${Token}@github.com/Prathm0025/Slot-Vikings-dev.git dev-build --force
                     '''
                 }
             }
