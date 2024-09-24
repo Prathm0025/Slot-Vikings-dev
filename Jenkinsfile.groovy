@@ -32,7 +32,7 @@ pipeline {
                     // Ensure the Unity path is correct
                     withEnv(["UNITY_PATH=${UNITY_INSTALLATION}"]) {
                         bat '''
-                        "%UNITY_PATH%" -quit -batchmode -projectPath "%PROJECT_PATH%" -executeMethod BuildScript.BuildWebGL -logFile "%WORKSPACE%\\%LOG_FILE_PATH%"
+                        "%UNITY_PATH%" -quit -batchmode -projectPath "%PROJECT_PATH%" -executeMethod BuildScript.BuildWebGL -logFile -
                         '''
                     }
                 }
