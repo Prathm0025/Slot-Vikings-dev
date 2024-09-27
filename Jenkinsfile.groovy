@@ -18,7 +18,9 @@ pipeline {
             steps {
                 script {
                     dir("${PROJECT_PATH}") { // Clone into the desired directory
-                        git url: REPO_URL, branch: 'dev-build'
+                        bat '''
+                        git clone https://github.com/Prathm0025/Slot-Vikings-dev.git
+                        '''
                     }
                 }
             }
