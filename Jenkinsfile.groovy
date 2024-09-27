@@ -18,7 +18,7 @@ pipeline {
             steps {
                 script {
                     dir("${PROJECT_PATH}") { // Clone into the desired directory
-                        git url: REPO_URL, branch: 'dev'
+                        git url: REPO_URL, branch: 'dev-build'
                     }
                 }
             }
