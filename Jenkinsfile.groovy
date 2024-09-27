@@ -1,7 +1,7 @@
 def PROJECT_NAME = "Slot-Vikings-dev"
 def UNITY_VERSION = "2022.3.48f1"
 def UNITY_INSTALLATION = "C:\\Program Files\\Unity\\Hub\\Editor\\${UNITY_VERSION}\\Editor\\Unity.exe"
-def REPO_URL = "https://github.com/Prathm0025/Slot-Vikings-dev.git"
+def REPO_URL = "https://github.com/prathammore0025/Slot-Vikings-dev.git"
 
 pipeline {
     agent {
@@ -18,9 +18,7 @@ pipeline {
             steps {
                 script {
                     dir("${PROJECT_PATH}") { // Clone into the desired directory
-                        bat '''
-                        git clone https://github.com/Prathm0025/Slot-Vikings-dev.git
-                        '''
+                         git url: REPO_URL, branch: 'dev', credentialsId: 'GITHUB'
                     }
                 }
             }
