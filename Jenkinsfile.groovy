@@ -2,6 +2,7 @@ def PROJECT_NAME = "Slot-Vikings-dev"
 def UNITY_VERSION = "2022.3.48f1"
 def UNITY_INSTALLATION = "C:\\Program Files\\Unity\\Hub\\Editor\\${UNITY_VERSION}\\Editor\\Unity.exe"
 def REPO_URL = "https://github.com/Prathm0025/Slot-Vikings-dev.git"
+def S3_BUCKET = "vikingsbucket"
 
 pipeline {
     agent {
@@ -15,6 +16,8 @@ pipeline {
     environment {
         PROJECT_PATH = "C:\\${PROJECT_NAME}" 
         Token = credentials('GITHUB_Prathm0025') 
+        AWS_ACCESS_KEY = credentials('AWS_ACCESS_KEY_ID')
+        AWS_SECRET_KEY = credentials('AWS_SECRET_ACCESS_KEY')
     }
 
     stages {
@@ -40,7 +43,7 @@ pipeline {
             }
         }
 
-        stage('Push Build') {
+        stage('Push Build to GitHub') {
             steps {
                 script {
                     dir("${PROJECT_PATH}") { // Ensure you are in the correct directory
@@ -59,14 +62,23 @@ pipeline {
                 }
             }
         }
-        
+
         stage('Deploy to S3') {
             steps {
                 script {
-                    dir("${PROJECT_PATH}") {
-                    bat '''
-                    aws s3 cp "Builds/WebGL/" s3://vikingsbucket/ --recursive --exclude "*.html" --acl public-read
-                    '''
+                    withEnv(["AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY}", "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_KEY}"]) {
+                        dir("${PROJECT_PATH}") {
+                            bat '''
+                            # Copy all files, including .html files, to S3
+                            aws s3 cp "Builds/WebGL/" s3://${S3_BUCKET}/ --recursive --acl public-read
+                            
+                            # Move index.html to the root for S3 hosting
+                            aws s3 cp "Builds/WebGL/index.html" s3://${S3_BUCKET}/index.html --acl public-read
+                            
+                            # Optional: Set S3 bucket for static web hosting
+                            aws s3 website s3://${S3_BUCKET}/ --index-document index.html --error-document index.html
+                            '''
+                        }
                     }
                 }
             }
