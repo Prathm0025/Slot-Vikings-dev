@@ -41,14 +41,18 @@ pipeline {
                 script {
                     dir("${PROJECT_PATH}") { // Ensure you are in the correct directory
                         bat '''
-                        git stash 
-                        git checkout dev-build
-                        git add -f Builds
-                        git config user.email "moreprathmesh849@gmail.com"
-                        git config user.name "Prathm0025"
-                        git commit -m "Added Builds folder from dev-build branch"
-                        git remote set-url origin https://${Token}@github.com/Prathm0025/Slot-Vikings-dev.git
-                        git push origin dev-build
+                         git init
+                         git config user.email "moreprathmesh849@gmail.com"
+                         git config user.name "Prathm0025"
+                         git add Builds
+                     if [ -n "$(git status --porcelain)" ]; then
+                        git commit -m "Add build"
+                        git branch main
+                        git remote set-url origin https://github.com/Prathm0025/Slot-Vikings-dev.git
+                        git push https://${Token}@github.com/Prathm0025/Slot-Vikings-dev.git main --force
+                     else
+                        echo 'No changes to commit'
+                     fi
                         '''
                     }
                 }
@@ -59,7 +63,7 @@ pipeline {
             steps {
                 script {
                     bat '''
-                    aws s3 cp "Builds/" s3://vikingsbucket/ --recursive
+                    aws s3 cp "Builds/WebGL/*" s3://vikingsbucket/ --recursive
                     '''
                 }
             }
