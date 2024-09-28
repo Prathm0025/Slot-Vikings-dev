@@ -63,24 +63,18 @@ pipeline {
         stage('Deploy to S3') {
             steps {
                 script {
-                    withCredentials([string(credentialsId: 'AWS_ACCESS_KEY_ID', variable: 'AWS_ACCESS_KEY_ID'),
-                                     string(credentialsId: 'AWS_SECRET_ACCESS_KEY', variable: 'AWS_SECRET_ACCESS_KEY')]) {
-                        dir("${PROJECT_PATH}") {
-                            bat '''
-                            aws configure set aws_access_key_id ${AWS_ACCESS_KEY_ID}
-                            aws configure set aws_secret_access_key ${AWS_SECRET_ACCESS_KEY}
-
-                           
-                            aws s3 cp "Builds/WebGL/" s3://${S3_BUCKET}/ --recursive --acl public-read
-                            
-                       
-                            aws s3 cp "Builds/WebGL/index.html" s3://${S3_BUCKET}/index.html --acl public-read
-                            
-                           
-                            aws s3 website s3://${S3_BUCKET}/ --index-document index.html --error-document index.html
-                            '''
-                        }
-                    }
+                    withEnv(["AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY}", "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_KEY}", "S3_BUCKET=vikingsbucket"]) {
+                dir("${PROJECT_PATH}") {
+                    bat '''
+                    REM Copy all files, including .html files, to S3
+                    aws s3 cp "Builds/WebGL/" s3://%S3_BUCKET%/ --recursive --acl public-read
+                    
+                    REM Move index.html to the root for S3 hosting
+                    aws s3 cp "Builds/WebGL/index.html" s3://%S3_BUCKET%/index.html --acl public-read
+                    
+                    REM Optional: Set S3 bucket for static web hosting
+                    aws s3 website s3://%S3_BUCKET%/ --index-document index.html --error-document index.html
+                    '''
                 }
             }
         }
