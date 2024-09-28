@@ -50,14 +50,10 @@ pipeline {
                             git config user.name "Prathm0025"
                             git add Builds
                             git status --porcelain
-                            IF ERRORLEVEL 1 (
                             git commit -m "Add build"
                             git branch main
                             git remote set-url origin https://${Token}@github.com/Prathm0025/Slot-Vikings-dev.git
                             git push origin main --force
-                            ) ELSE (
-                            echo No changes to commit
-                            )
                         '''
                     }
                 }
