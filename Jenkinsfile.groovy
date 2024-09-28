@@ -23,7 +23,7 @@ pipeline {
             steps {
                 script {
                     dir("${PROJECT_PATH}") { 
-                         git url: REPO_URL, branch: 'dev-build', credentialsId: 'GITHUB_Prathm0025'
+                        git url: REPO_URL, branch: 'dev-build', credentialsId: 'GITHUB_Prathm0025'
                     }
                 }
             }
@@ -64,19 +64,28 @@ pipeline {
             steps {
                 script {
                     withEnv(["AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY}", "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_KEY}", "S3_BUCKET=vikingsbucket"]) {
-                dir("${PROJECT_PATH}") {
-                    bat '''
-                    REM Copy all files, including .html files, to S3
-                    aws s3 cp "Builds/WebGL/" s3://%S3_BUCKET%/ --recursive --acl public-read
-                    
-                    REM Move index.html to the root for S3 hosting
-                    aws s3 cp "Builds/WebGL/index.html" s3://%S3_BUCKET%/index.html --acl public-read
-                    
-                    REM Optional: Set S3 bucket for static web hosting
-                    aws s3 website s3://%S3_BUCKET%/ --index-document index.html --error-document index.html
-                    '''
+                        dir("${PROJECT_PATH}") {
+                            bat '''
+                            REM Copy all files, including .html files, to S3
+                            aws s3 cp "Builds/WebGL/" s3://%S3_BUCKET%/ --recursive --acl public-read
+                            
+                            REM Move index.html to the root for S3 hosting
+                            aws s3 cp "Builds/WebGL/index.html" s3://%S3_BUCKET%/index.html --acl public-read
+                            
+                            REM Optional: Set S3 bucket for static web hosting
+                            aws s3 website s3://%S3_BUCKET%/ --index-document index.html --error-document index.html
+                            '''
+                        }
+                    }
                 }
             }
         }
+    } // End of stages
+
+    post {
+        always {
+            echo 'Cleaning up workspace...'
+            deleteDir() // Clean up the workspace
+        }
     }
-}
+} // End of pipeline
