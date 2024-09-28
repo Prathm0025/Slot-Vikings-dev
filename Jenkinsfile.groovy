@@ -1,7 +1,7 @@
 def PROJECT_NAME = "Slot-Vikings-dev"
 def UNITY_VERSION = "2022.3.48f1"
 def UNITY_INSTALLATION = "C:\\Program Files\\Unity\\Hub\\Editor\\${UNITY_VERSION}\\Editor\\Unity.exe"
-def REPO_URL = "https://github.com/prathammore0025/Slot-Vikings-dev.git"
+def REPO_URL = "https://github.com/Prathm0025/Slot-Vikings-dev.git"
 
 pipeline {
     agent {
@@ -9,16 +9,16 @@ pipeline {
     }
     
     environment {
-        PROJECT_PATH = "C:\\${PROJECT_NAME}" // Cloning the repository into C:/ instead of C:/Program Files
-        Token = credentials('GITHUB_Prathm0025') // Use GitHub credentials
+        PROJECT_PATH = "C:\\${PROJECT_NAME}" 
+        Token = credentials('GITHUB_Prathm0025') 
     }
 
     stages {
         stage('Checkout') {
             steps {
                 script {
-                    dir("${PROJECT_PATH}") { // Clone into the desired directory
-                         git url: REPO_URL, branch: 'dev', credentialsId: 'GITHUB'
+                    dir("${PROJECT_PATH}") { 
+                         git url: REPO_URL, branch: 'dev-build', credentialsId: 'GITHUB_Prathm0025'
                     }
                 }
             }
@@ -42,13 +42,13 @@ pipeline {
                     dir("${PROJECT_PATH}") { // Ensure you are in the correct directory
                         bat '''
                         git stash 
-                        git checkout dev-build
-                        git checkout dev -- Builds
+                        git checkout main
+                        git checkout dev-build -- Builds
                         git add Builds
-                        git commit -m "Added Builds folder from dev branch"
                         git config user.email "moreprathmesh849@gmail.com"
-                        git config user.name "prathammore0025"
-                        git remote set-url origin https://${Token}@github.com/prathammore0025/Slot-Vikings-dev.git
+                        git config user.name "Prathm0025"
+                        git commit -m "Added Builds folder from dev-build branch"
+                        git remote set-url origin https://${Token}@github.com/Prathm0025/Slot-Vikings-dev.git
                         git push origin dev-build
                         '''
                     }
