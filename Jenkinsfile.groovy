@@ -42,8 +42,7 @@ pipeline {
                     dir("${PROJECT_PATH}") { // Ensure you are in the correct directory
                         bat '''
                         git stash 
-                        git checkout main
-                        git checkout dev-build -- Builds
+                        git checkout dev-build
                         git add Builds
                         git config user.email "moreprathmesh849@gmail.com"
                         git config user.name "Prathm0025"
@@ -60,7 +59,7 @@ pipeline {
             steps {
                 script {
                     bat '''
-                    aws s3 cp "Builds\\" s3://vikingsbucket/ --recursive
+                    aws s3 cp "Builds/" s3://vikingsbucket/ --recursive
                     '''
                 }
             }
