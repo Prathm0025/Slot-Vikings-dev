@@ -16,8 +16,8 @@ pipeline {
     environment {
         PROJECT_PATH = "C:\\${PROJECT_NAME}" 
         Token = credentials('GITHUB_Prathm0025') 
-        AWS_ACCESS_KEY = credentials('AWS_ACCESS_KEY_ID')
-        AWS_SECRET_KEY = credentials('AWS_SECRET_ACCESS_KEY')
+        AWS_ACCESS_KEY = credentials('AWS_ACCESS_KEY')
+        AWS_SECRET_KEY = credentials('AWS_SECRET_KEY')
     }
 
     stages {
