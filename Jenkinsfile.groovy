@@ -5,7 +5,7 @@ def REPO_URL = "https://github.com/prathammore0025/Slot-Vikings-dev.git"
 
 pipeline {
     agent {
-        label 'Windows-Agent' // Specify the agent by label
+        label 'windows' // Specify the agent by label
     }
     
     environment {
