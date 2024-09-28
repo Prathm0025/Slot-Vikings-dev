@@ -10,7 +10,7 @@ pipeline {
     
     environment {
         PROJECT_PATH = "C:\\${PROJECT_NAME}" // Cloning the repository into C:/ instead of C:/Program Files
-        Token = credentials('GITHUB') // Use GitHub credentials
+        Token = credentials('GITHUB_Prathm0025') // Use GitHub credentials
     }
 
     stages {
