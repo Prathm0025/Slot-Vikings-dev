@@ -41,18 +41,19 @@ pipeline {
                 script {
                     dir("${PROJECT_PATH}") { // Ensure you are in the correct directory
                         bat '''
-                         git init
-                         git config user.email "moreprathmesh849@gmail.com"
-                         git config user.name "Prathm0025"
-                         git add Builds
-                     if [ -n "$(git status --porcelain)" ]; then
-                        git commit -m "Add build"
-                        git branch main
-                        git remote set-url origin https://github.com/Prathm0025/Slot-Vikings-dev.git
-                        git push https://${Token}@github.com/Prathm0025/Slot-Vikings-dev.git main --force
-                     else
-                        echo 'No changes to commit'
-                     fi
+                            git init
+                            git config user.email "moreprathmesh849@gmail.com"
+                            git config user.name "Prathm0025"
+                            git add Builds
+                            git status --porcelain
+                            IF ERRORLEVEL 1 (
+                            git commit -m "Add build"
+                            git branch main
+                            git remote set-url origin https://${Token}@github.com/Prathm0025/Slot-Vikings-dev.git
+                            git push origin main --force
+                            ) ELSE (
+                            echo No changes to commit
+                            )
                         '''
                     }
                 }
