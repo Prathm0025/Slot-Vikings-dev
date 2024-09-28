@@ -7,6 +7,10 @@ pipeline {
     agent {
         label 'windows' // Specify the agent by label
     }
+
+    options {
+        timeout(time: 20, unit: 'MINUTES') // Set a timeout for the entire build
+    }
     
     environment {
         PROJECT_PATH = "C:\\${PROJECT_NAME}" 
