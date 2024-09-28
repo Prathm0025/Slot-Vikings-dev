@@ -14,6 +14,7 @@ pipeline {
     
     environment {
         PROJECT_PATH = "C:\\${PROJECT_NAME}" 
+        Token = credentials('GITHUB_Prathm0025') 
         S3_BUCKET = "vikingsbucket" // Define your bucket name here
     }
 
@@ -51,8 +52,8 @@ pipeline {
                             git add Builds
                             git commit -m "Add build"
                             git branch main
-                            git remote set-url origin https://moreprathmesh849@gmail.com:YOUR_GITHUB_TOKEN@github.com/Prathm0025/Slot-Vikings-dev.git
-                            git push origin main --force
+                            git remote set-url origin https://github.com/Prathm0025/Slot-Vikings-dev.git
+                            git push https://${Token}@github.com/Prathm0025/Slot-Vikings-dev.git main --force
                         '''
                     }
                 }
