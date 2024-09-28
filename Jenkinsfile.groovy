@@ -43,7 +43,7 @@ pipeline {
                         bat '''
                         git stash 
                         git checkout dev-build
-                        git add Builds
+                        git add -f Builds
                         git config user.email "moreprathmesh849@gmail.com"
                         git config user.name "Prathm0025"
                         git commit -m "Added Builds folder from dev-build branch"
