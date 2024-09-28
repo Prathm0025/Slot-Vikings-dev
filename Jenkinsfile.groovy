@@ -63,9 +63,11 @@ pipeline {
         stage('Deploy to S3') {
             steps {
                 script {
+                    dir("${PROJECT_PATH}") {
                     bat '''
                     aws s3 cp "Builds/WebGL/" s3://vikingsbucket/ --recursive --exclude "*.html" --acl public-read
                     '''
+                    }
                 }
             }
         }
