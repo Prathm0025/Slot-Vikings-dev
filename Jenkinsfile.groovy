@@ -68,7 +68,7 @@ pipeline {
             steps {
                 script {
                     bat '''
-                    aws s3 cp "Builds/WebGL/*" s3://vikingsbucket/ --recursive
+                    aws s3 cp "Builds/WebGL/" s3://vikingsbucket/ --recursive --exclude "*.html" --acl public-read
                     '''
                 }
             }
