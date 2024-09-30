@@ -56,3 +56,63 @@ If you want to run this pipeline, the following setup steps and modifications ar
            BuildPipeline.BuildPlayer(scenes, "Builds/WebGL", BuildTarget.WebGL, BuildOptions.None);
        }
    }
+
+# Creating the Jenkins Pipeline
+
+Follow these steps to create and configure the Jenkins pipeline for the Slot Vikings Dev project:
+
+### Step 1: Access Jenkins
+- Open your Jenkins server by navigating to: `http://<your-ip>:8080`
+- Log in with your Jenkins credentials.
+
+### Step 2: Create a New Job
+- On the Jenkins dashboard, click **New Item**.
+- Enter a name for your pipeline (e.g., "Slot-Vikings-Pipeline").
+- Select **Pipeline** as the job type.
+- Click **OK** to proceed.
+
+### Step 3: Configure General Settings
+- In the **General** tab, you can provide a description of the project.
+- If your repository is hosted on GitHub, check the box for **GitHub project** and add the repository URL.
+
+### Step 4: Configure Pipeline Source
+- Scroll down to the **Pipeline** section.
+- Select **Pipeline script from SCM** (Source Code Management).
+- In the **SCM** dropdown, choose **Git**.
+- In the **Repository URL**, enter your GitHub repository URL (e.g., `https://github.com/Prathm0025/Slot-Vikings-dev.git`).
+- In the **Branches to build**, enter `dev-build` (or any other branch you want to use for builds).
+- In the **Credentials** section, select the credentials you added earlier for GitHub authentication.
+
+### Step 5: Define Jenkinsfile Path
+- Under the **Script Path**, ensure the field is set to the correct file location of your `Jenkinsfile`. The default is `Jenkinsfile` if it is located in the root of your repository.
+
+### Step 6: Configure Build Triggers (Optional)
+- If you want to trigger builds automatically, configure triggers under the **Build Triggers** section.
+- Enable **GitHub hook trigger for GITScm polling** to automatically trigger builds when changes are pushed to the repository.
+
+### Step 7: Save the Job
+- Once the pipeline configuration is complete, click **Save**.
+
+### Step 8: Trigger the Pipeline
+- You can manually trigger the pipeline by clicking **Build Now** on the project page.
+- If everything is set up correctly, the pipeline will automatically pull the code, build the Unity WebGL version, push the build to GitHub, and deploy it to your S3 bucket.
+
+---
+
+## Unity Build Script
+
+The Unity build script must be placed in the following path within your project:  
+**`Assets/Scripts/Editor/BuildScript.cs`**
+
+### Example Build Script:
+```csharp
+using UnityEditor;
+
+public class BuildScript
+{
+    public static void BuildWebGL()
+    {
+        string[] scenes = { "Assets/Scenes/MainScene.unity" };
+        BuildPipeline.BuildPlayer(scenes, "Builds/WebGL", BuildTarget.WebGL, BuildOptions.None);
+    }
+}
