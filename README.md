@@ -40,7 +40,7 @@ You need to configure a Windows-based Jenkins node to execute Unity builds:
 ### 5. Configure GitHub Webhook
 To trigger builds automatically, set up a GitHub webhook in your repository:
 
-- Go to your GitHub repository (e.g., `https://github.com/Prathm0025/Slot-Vikings-dev`).
+- Go to your GitHub repository (e.g., `https://github.com/<GitHub-Username>/<your-project-repo>`).
 - Navigate to **Settings > Webhooks > Add Webhook**.
 - Enter the Jenkins URL in the **Payload URL** field: `http://<your-ip>:8080/github-webhook/`
 - Set the **Content type** to `application/json` and select the trigger events for the webhook.
