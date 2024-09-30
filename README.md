@@ -25,7 +25,7 @@ Jenkins is the tool used to automate the build and deployment process for this p
 ### 3. Install Required Jenkins Plugins
 To ensure the pipeline runs smoothly, you need to install the following Jenkins plugins:
 
-- **Pipeline Stage View**: Provides visualization for pipeline stages.
+- **Pipeline Stage View**: Provides visualization for pipeline stages and build logs.
 - **Hidden Parameter**: Allows you to define hidden parameters in pipelines.
 - **Pipeline: Groovy**: Provides Groovy scripting support for Jenkins pipelines.
 - **Pipeline: GitHub Groovy Libraries**: Integrates GitHub libraries into your pipeline.
@@ -54,5 +54,5 @@ Install Unity and Unity Hub on your Windows machine to build the project:
   - `C:\Program Files\Unity Hub\`
 - Use Unity Hub to install the Unity Editor version **2022.3.48f1**:
   - Path to Unity Editor: `C:\Program Files\Unity\Hub\Editor\2022.3.47f1\Editor\Unity.exe`
-  
+
 After completing these steps, your system will be ready to run the Slot Vikings Dev project pipeline using Jenkins.
