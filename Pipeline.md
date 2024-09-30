@@ -41,22 +41,6 @@ If you want to run this pipeline, the following setup steps and modifications ar
    - Replace the S3 bucket name in the `S3_BUCKET` environment variable with your own bucket name.
    - Ensure that the bucket is correctly set up for static website hosting.
 
-### 4. **Unity Build Script**
-   - Ensure that a custom Unity build script (`BuildScript.cs`) is created in your Unity project. This script should contain a method to build the WebGL version of your project.
-
-   Example build script:
-   ```csharp
-   using UnityEditor;
-
-   public class BuildScript
-   {
-       public static void BuildWebGL()
-       {
-           string[] scenes = { "Assets/Scenes/MainScene.unity" };
-           BuildPipeline.BuildPlayer(scenes, "Builds/WebGL", BuildTarget.WebGL, BuildOptions.None);
-       }
-   }
-
 # Creating the Jenkins Pipeline
 
 Follow these steps to create and configure the Jenkins pipeline for the Slot Vikings Dev project:
