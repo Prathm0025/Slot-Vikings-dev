@@ -52,7 +52,7 @@ Install Unity and Unity Hub on your Windows machine to build the project:
   - [Download Unity Hub](https://public-cdn.cloud.unity3d.com/hub/prod/UnityHubSetup.exe)
 - Install Unity Hub in:
   - `C:\Program Files\Unity Hub\`
-- Use Unity Hub to install the Unity Editor version **2022.3.47f1**:
+- Use Unity Hub to install the Unity Editor version **2022.3.48f1**:
   - Path to Unity Editor: `C:\Program Files\Unity\Hub\Editor\2022.3.47f1\Editor\Unity.exe`
   
 After completing these steps, your system will be ready to run the Slot Vikings Dev project pipeline using Jenkins.
