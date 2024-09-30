@@ -55,4 +55,23 @@ Install Unity and Unity Hub on your Windows machine to build the project:
 - Use Unity Hub to install the Unity Editor version **2022.3.48f1**:
   - Path to Unity Editor: `C:\Program Files\Unity\Hub\Editor\2022.3.47f1\Editor\Unity.exe`
 
+ ### 7. Unity Build Script
+
+The Unity build script must be placed in the following path within your project:  
+**`Assets/Scripts/Editor/BuildScript.cs`**
+
+# Example Build Script:
+```csharp
+using UnityEditor;
+
+public class BuildScript
+{
+    public static void BuildWebGL()
+    {
+        string[] scenes = { "Assets/Scenes/MainScene.unity" };
+        BuildPipeline.BuildPlayer(scenes, "Builds/WebGL", BuildTarget.WebGL, BuildOptions.None);
+    }
+}
+```
+
 After completing these steps, your system will be ready to run the Slot Vikings Dev project pipeline using Jenkins.
