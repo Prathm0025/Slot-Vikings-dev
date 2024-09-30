@@ -68,7 +68,7 @@ Follow these steps to create and configure the Jenkins pipeline for the Slot Vik
 - In the **Credentials** section, select the credentials you added earlier for GitHub authentication.
 
 ### Step 5: Define Jenkinsfile Path
-- Under the **Script Path**, ensure the field is set to the correct file location of your `Jenkinsfile`. The default is `Jenkinsfile` if it is located in the root of your repository.
+- Under the **Script Path**, ensure the field is set to the correct file location of your `Jenkinsfile.groovy`. The default is `Jenkinsfile.groovy` if it is located in the root of your repository.
 
 ### Step 6: Configure Build Triggers (Optional)
 - If you want to trigger builds automatically, configure triggers under the **Build Triggers** section.
